@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const NavbarContainer = styled.header`
   z-index: 9999;
@@ -19,6 +20,12 @@ const NavHeaderContainer = styled.div`
   display: flex;
   align-items: center;
 
+  a {
+    display: flex;
+    color: inherit;
+    text-decoration: none;
+  }
+
   svg {
     font-size: 1.5rem;
     margin-left: 8px;
@@ -36,8 +43,10 @@ export const Navbar = () => {
   return (
     <NavbarContainer>
       <NavHeaderContainer>
-        <NavHeader>House Banking</NavHeader>
-        <RiMoneyDollarCircleFill />
+        <Link to="/">
+          <NavHeader>House Banking</NavHeader>
+          <RiMoneyDollarCircleFill />
+        </Link>
       </NavHeaderContainer>
     </NavbarContainer>
   );
