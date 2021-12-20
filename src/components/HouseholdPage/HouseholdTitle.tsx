@@ -5,6 +5,7 @@ import { FaCrown } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { IoArrowUpCircleSharp, IoArrowDownCircleSharp } from "react-icons/io5";
 import { HouseholdTitle_query$key } from "./__generated__/HouseholdTitle_query.graphql";
+import { HouseholdInvite } from "./HouseholdInvite";
 
 type HouseholdTitleProps = {
   query: HouseholdTitle_query$key;
@@ -15,7 +16,8 @@ const Container = styled.div`
   //align-items: center;
   flex-direction: column;
   width: 68.75rem;
-  height: 140px;
+  height: fit-content;
+  min-height: 140px;
   border-left: 16px solid #0553a1;
   border-right: 16px solid #0553a1;
   border-top: 4px solid #0553a1;
@@ -64,7 +66,7 @@ const TotalRevenue = styled.h2`
   color: #05ab31;
   -webkit-text-fill-color: #05ab31; /* Will override color (regardless of order) */
   -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #fff;
+  -webkit-text-stroke-color: #000;
 
   svg {
     background: #fff;
@@ -80,7 +82,7 @@ const TotalExpenses = styled.h2`
   display: flex;
   -webkit-text-fill-color: red; /* Will override color (regardless of order) */
   -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #fff;
+  -webkit-text-stroke-color: #000;
 
   svg {
     background: #fff;
@@ -109,7 +111,7 @@ export const HouseholdTitle = ({ query }: HouseholdTitleProps) => {
           id
           houseHoldName
           totalRevenue
-          inviteCode
+          ...HouseholdInvite_code
           houseChief {
             username
           }
@@ -172,6 +174,7 @@ export const HouseholdTitle = ({ query }: HouseholdTitleProps) => {
           <FiUsers />
         </ResidentCount>
       </InfoContainer>
+      <HouseholdInvite query={response.houseHoldById} />
     </Container>
   );
 };

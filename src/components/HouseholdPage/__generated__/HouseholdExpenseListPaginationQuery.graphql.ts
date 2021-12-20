@@ -47,6 +47,13 @@ fragment HouseholdExpenseList_query_2HEEH6 on Query {
         endCursor
       }
     }
+    residentOptions: residents {
+      edges {
+        node {
+          id
+        }
+      }
+    }
     id
   }
 }
@@ -276,6 +283,40 @@ return {
             "kind": "LinkedHandle",
             "name": "expenses"
           },
+          {
+            "alias": "residentOptions",
+            "args": null,
+            "concreteType": "UserConnection",
+            "kind": "LinkedField",
+            "name": "residents",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "UserEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "User",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -283,14 +324,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3be02cd3e87d04563b776583fea65d64",
+    "cacheID": "3b311898ecfc62fc340dc2d924b971e5",
     "id": null,
     "metadata": {},
     "name": "HouseholdExpenseListPaginationQuery",
     "operationKind": "query",
-    "text": "query HouseholdExpenseListPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $id: ID!\n) {\n  ...HouseholdExpenseList_query_2HEEH6\n}\n\nfragment HouseholdExpenseList_query_2HEEH6 on Query {\n  houseHoldById(id: $id) {\n    houseHoldExpenses: expenses(first: $first, after: $after) {\n      edges {\n        cursor\n        node {\n          id\n          ...HouseholdExpense_expense\n          __typename\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n    }\n    id\n  }\n}\n\nfragment HouseholdExpense_expense on Expense {\n  id\n  name\n  price\n  owner: responsable {\n    id\n    username\n  }\n}\n"
+    "text": "query HouseholdExpenseListPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $id: ID!\n) {\n  ...HouseholdExpenseList_query_2HEEH6\n}\n\nfragment HouseholdExpenseList_query_2HEEH6 on Query {\n  houseHoldById(id: $id) {\n    houseHoldExpenses: expenses(first: $first, after: $after) {\n      edges {\n        cursor\n        node {\n          id\n          ...HouseholdExpense_expense\n          __typename\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n    }\n    residentOptions: residents {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment HouseholdExpense_expense on Expense {\n  id\n  name\n  price\n  owner: responsable {\n    id\n    username\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bd4b010a7c81fd100aa63fa3fa2085c7';
+(node as any).hash = '96f08ae92fb724939a7b110c48c9a2c9';
 export default node;

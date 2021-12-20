@@ -126,7 +126,7 @@ export const ExpenseChart = ({ query }: ExpenseGraphProps) => {
       <Checkbox
         isChecked={showAllExpenses}
         onclickFn={() => setShowAllExpenses((prev) => !prev)}
-        title="Mostrar todas as despesas"
+        title="Show all expenses"
       />
     </ChartContainer>
   );

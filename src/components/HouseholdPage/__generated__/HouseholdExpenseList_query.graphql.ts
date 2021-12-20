@@ -23,6 +23,13 @@ export type HouseholdExpenseList_query = {
                 readonly endCursor: string | null;
             };
         } | null;
+        readonly residentOptions: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly id: string;
+                } | null;
+            } | null> | null;
+        } | null;
     } | null;
     readonly " $refType": "HouseholdExpenseList_query";
 };
@@ -38,7 +45,14 @@ const node: ReaderFragment = (function(){
 var v0 = [
   "houseHoldById",
   "houseHoldExpenses"
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [
     {
@@ -126,13 +140,7 @@ return {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "id",
-                      "storageKey": null
-                    },
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -204,6 +212,40 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "alias": "residentOptions",
+          "args": null,
+          "concreteType": "UserConnection",
+          "kind": "LinkedField",
+          "name": "residents",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "UserEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "User",
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    (v1/*: any*/)
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -213,5 +255,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'bd4b010a7c81fd100aa63fa3fa2085c7';
+(node as any).hash = '96f08ae92fb724939a7b110c48c9a2c9';
 export default node;

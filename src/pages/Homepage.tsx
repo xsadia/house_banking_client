@@ -1,6 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { Suspense } from "react";
 import { useLazyLoadQuery } from "react-relay";
+import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import { ExpenseChart } from "../components/Homepage/ExpenseChart";
 import { ExpenseList } from "../components/Homepage/ExpenseList";
@@ -8,6 +9,7 @@ import { HouseholdList } from "../components/Homepage/HouseholdList";
 import { Loading } from "../components/reusable/Loading";
 import { Layout } from "../components/UI/Layout";
 import { Homepage_homepageQuery } from "./__generated__/Homepage_homepageQuery.graphql";
+import "react-toastify/dist/ReactToastify.css";
 
 const Container = styled.div`
   margin-top: 64px;
@@ -49,6 +51,7 @@ export const Homepage = () => {
           </Suspense>
         </ListsContainer>
       </Container>
+      <ToastContainer />
     </Layout>
   );
 };

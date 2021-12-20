@@ -3,8 +3,17 @@ import { useFragment } from "react-relay";
 import styled from "styled-components";
 import { HouseholdExpense_expense$key } from "./__generated__/HouseholdExpense_expense.graphql";
 
+type Node = {
+  id: string[];
+};
+
+type UserEdge = {
+  node: Node;
+};
+
 type ExpenseProps = {
-  query: any;
+  query: HouseholdExpense_expense$key;
+  residents: any[];
 };
 
 const Container = styled.div`

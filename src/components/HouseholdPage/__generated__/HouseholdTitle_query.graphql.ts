@@ -10,7 +10,6 @@ export type HouseholdTitle_query = {
         readonly id: string;
         readonly houseHoldName: string | null;
         readonly totalRevenue: number | null;
-        readonly inviteCode: string | null;
         readonly houseChief: {
             readonly username: string | null;
         } | null;
@@ -28,6 +27,7 @@ export type HouseholdTitle_query = {
                 } | null;
             } | null> | null;
         } | null;
+        readonly " $fragmentRefs": FragmentRefs<"HouseholdInvite_code">;
     } | null;
     readonly " $refType": "HouseholdTitle_query";
 };
@@ -85,13 +85,6 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "totalRevenue",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "inviteCode",
           "storageKey": null
         },
         {
@@ -185,6 +178,11 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "HouseholdInvite_code"
         }
       ],
       "storageKey": null
@@ -194,5 +192,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6a44f8ec54996c1d629580f8484dfac8';
+(node as any).hash = 'a95840d0851d70307657c1cc41ab0177';
 export default node;

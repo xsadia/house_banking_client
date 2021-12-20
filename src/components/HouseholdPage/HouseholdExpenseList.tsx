@@ -1,9 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import {
-  ConnectionHandler,
-  useMutation,
-  usePaginationFragment,
-} from "react-relay";
+import { useMutation, usePaginationFragment } from "react-relay";
 import { HouseholdExpenseList_query$key } from "./__generated__/HouseholdExpenseList_query.graphql";
 import { HouseholdExpenseListPaginationQuery } from "./__generated__/HouseholdExpenseListPaginationQuery.graphql";
 import styled, { css } from "styled-components";
@@ -15,9 +11,9 @@ import * as Yup from "yup";
 import {
   HouseholdExpenseListMutationResponse,
   CreateExpenseInput,
+  HouseholdExpenseListMutation,
 } from "./__generated__/HouseholdExpenseListMutation.graphql";
 import { toast } from "react-toastify";
-import { RecordProxy } from "relay-runtime";
 import { useRouteMatch } from "react-router";
 
 type HouseholdExpenseListProps = {
@@ -40,7 +36,7 @@ const Container = styled.div`
   width: fit-content;
   min-width: 300px;
   height: fit-content;
-  max-height: 400px;
+  max-height: 283px;
   border: 3px solid var(--blue);
   margin-top: 8px;
 `;
@@ -147,34 +143,42 @@ export const HouseholdExpenseList = ({ query }: HouseholdExpenseListProps) => {
               endCursor
             }
           }
+          residentOptions: residents {
+            edges {
+              node {
+                id
+              }
+            }
+          }
         }
       }
     `,
     query
   );
 
-  const [commitExpense, isPending] = useMutation(graphql`
-    mutation HouseholdExpenseListMutation(
-      $input: CreateExpenseInput!
-      $connections: [ID!]!
-    ) {
-      CreateExpenseMutation(input: $input) {
-        expense @prependEdge(connections: $connections) {
-          cursor
-          node {
-            id
-            name
-            price
-            responsable {
+  const [commitExpense, isPending] =
+    useMutation<HouseholdExpenseListMutation>(graphql`
+      mutation HouseholdExpenseListMutation(
+        $input: CreateExpenseInput!
+        $connections: [ID!]!
+      ) {
+        CreateExpenseMutation(input: $input) {
+          expense @prependEdge(connections: $connections) {
+            cursor
+            node {
               id
-              username
+              name
+              price
+              responsable {
+                id
+                username
+              }
             }
           }
+          error
         }
-        error
       }
-    }
-  `);
+    `);
 
   const formik = useFormik({
     initialValues: {
@@ -204,6 +208,7 @@ export const HouseholdExpenseList = ({ query }: HouseholdExpenseListProps) => {
               type: "error",
               position: "top-right",
               autoClose: 5000,
+              theme: "colored",
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
@@ -266,10 +271,16 @@ export const HouseholdExpenseList = ({ query }: HouseholdExpenseListProps) => {
             type="number"
           />
         </InputContainer>
-        <SubmitButton type="submit">Submit</SubmitButton>
+        <SubmitButton disabled={isPending} type="submit">
+          {isPending ? <Loading /> : "Submit"}
+        </SubmitButton>
       </ExpenseForm>
       {data.houseHoldById.houseHoldExpenses.edges.map(({ node }) => (
-        <HouseholdExpense key={node.id} query={node} />
+        <HouseholdExpense
+          key={node.id}
+          query={node}
+          residents={data.houseHoldById.residentOptions.edges}
+        />
       ))}
       {hasNext ? (
         <LoadMoreButton
